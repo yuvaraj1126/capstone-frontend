@@ -7,6 +7,8 @@ import Profile from './pages/Profile.jsx';
 import Login from "./pages/Login.jsx";
 import Register from './pages/Register.jsx';
 import AddRecipe from './pages/AddRecipe.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import RecipeDetailsPage from './pages/RecipeDetailsPage.jsx';
 
 // Route guard for private routes
 const PrivateRoute = ({ children }) => {
@@ -19,7 +21,7 @@ function App() {
   return (
     <Router>
       <div className="bg-gray-100 text-gray-800 min-h-screen">
-         <Navbar />
+        <Navbar />
         <Routes>
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
@@ -47,6 +49,15 @@ function App() {
             element={
               <PrivateRoute>
                 <Recipes />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/recipes/:id" element={<RecipeDetailsPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
               </PrivateRoute>
             }
           />

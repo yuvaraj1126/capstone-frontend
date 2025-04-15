@@ -22,13 +22,12 @@ function AddRecipe() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-   const res= await recipeService.createRecipes(form)
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const payload ={...form, userId: storedUser?.id}
+    const res= await recipeService.createRecipes(payload)
    if(res?.status === 200){
     navigate("/recipes")
    }
-   
-    console.log("Recipe submitted:", form);
-    // Here you will make a POST request to the backend
   };
 
   return (

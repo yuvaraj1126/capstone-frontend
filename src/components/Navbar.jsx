@@ -19,6 +19,9 @@ function Navbar() {
           <Link to="/recipes" className="text-white hover:text-black">
             Recipes
           </Link>
+          <Link to="/dashboard" className="text-white hover:text-black">
+            Dashboard
+          </Link>
           <Link to="/profile" className="text-white hover:text-black">
             Profile
           </Link>
