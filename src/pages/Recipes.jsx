@@ -8,6 +8,25 @@ function Recipes() {
 
   const recipeService = new RecipeService();
   const [allRecipes, setAllRecipes] = useState([])
+  const [search, setSearch] = useState("");
+  const [filteredval, setFilteredval] = useState([])
+
+
+  useEffect(() => {
+    setFilteredval(allRecipes)
+
+
+  }, [allRecipes])
+  useEffect(() => {
+    if (search) {
+      const filteredRecipes = allRecipes.filter((recipe) =>
+        recipe.ingredients.join(" ").toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredval(filteredRecipes)
+    }
+  }, [search])
+
+
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -34,13 +53,14 @@ function Recipes() {
         </Link>
       </div>
 
+
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"> */}
 
       {allRecipes.length === 0 && (
         <p className="text-red-500">No recipes found.</p>
       )}
       {/* Featured Recipes */}
-      <h2 className="text-2xl font-semibold mb-4">Featured Recipes</h2>
+      <h2 className="text-2xl font-semibold mb-2 text-center">Featured Recipes</h2>
       {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {allRecipes.map((recipe) => (
                     <div key={recipe.id} className="bg-white rounded shadow-md overflow-hidden">
@@ -54,8 +74,23 @@ function Recipes() {
                     </div>
                 ))}
             </div> */}
+
+      <div className="p-8 text-center">
+        <p className="text-gray-600 max-w-xl mx-auto mb-6">
+          Discover delicious recipes, share your creations, and connect with fellow foodies!
+        </p>
+
+        {/* Search Bar */}
+        <input
+          type="text"
+          placeholder="Search by ingredient (e.g. rice, egg...)"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full max-w-md px-4 py-2 border rounded mb-6"
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {allRecipes.map((recipe) => (
+        {filteredval.map((recipe) => (
           <div key={recipe._id} className="bg-white rounded shadow-md overflow-hidden">
             <img
               src={recipe.image}
@@ -67,9 +102,11 @@ function Recipes() {
               <p className="text-sm text-gray-500 mb-2">
                 Ingredients: {recipe.ingredients.slice(0, 3).join(", ")}...
               </p>
-              <p className="text-yellow-500 text-sm mb-2">
-                ★ {recipe.averageRating || "No rating yet"}
-              </p>
+              <div className="mb-6">
+                <p className="text-yellow-500 text-sm mb-2">
+                  <strong>Average Rating:</strong> ★ {recipe.averageRating || "No rating yet"}
+                </p>
+              </div>
               <Link
                 to={`/recipes/${recipe._id}`}
                 className="text-blue-500 underline hover:text-blue-700"
@@ -79,6 +116,9 @@ function Recipes() {
             </div>
           </div>
         ))}
+         {filteredval.length === 0 && (
+                <p className="text-red-500">No recipes found.</p>
+            )}
       </div>
 
     </div>

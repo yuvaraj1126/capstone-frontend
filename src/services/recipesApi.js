@@ -108,9 +108,9 @@ export class RecipeService extends BaseService {
     }
   }
 
-  async addComment(id, value, userId) {
+  async addComment(id, value, userId,rating) {
     try {
-      const response = await this.httpClient.post(`recipes/comment`, { text: value, userId: userId, id: id });
+      const response = await this.httpClient.post(`recipes/comment`, { text: value, userId: userId, id: id,rating});
       return {
         data: response.data,
         status: response.status,
@@ -124,9 +124,9 @@ export class RecipeService extends BaseService {
     }
   }
 
-  async getRatecomments(id, userId) {
+  async getRatecomments(id, userId,rating) {
     try {
-      const response = await this.httpClient.post(`recipes/reviews`, { userId: userId, id: id });
+      const response = await this.httpClient.post(`recipes/reviews`, { userId: userId, id: id ,rating});
       return {
         data: response.data,
         status: response.status,

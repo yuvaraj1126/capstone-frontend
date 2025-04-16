@@ -71,12 +71,12 @@ function Home() {
                 >
                     Explore More Recipes
                 </Link>
-                <Link
+                {/* <Link
                     to="/register"
                     className="bg-white text-green-500 border border-green-500 px-6 py-2 rounded hover:bg-green-100"
                 >
                     Join Now
-                </Link>
+                </Link> */}
             </div>
         </div>
     );
