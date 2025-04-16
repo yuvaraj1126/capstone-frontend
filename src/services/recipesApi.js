@@ -17,29 +17,41 @@ export class RecipeService extends BaseService {
     }
   }
 
-  getRecipeById(_id) {
-    return fetch(`/api/recipes/${_id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(async (res) => {
-      const contentType = res.headers.get("Content-Type");
-
-      if (!res.ok) {
-        // If response is not OK, try to get JSON or return plain status
-        let errorData;
-        if (contentType && contentType.includes("application/json")) {
-          errorData = await res.json();
-        }
-        return { status: res.status, error: errorData || "Something went wrong" };
-      }
-
-      // If it's OK and JSON, parse it
-      const data = await res.json();
-      return { status: res.status, data };
-    });
+  async getRecipeById(_id) {
+    try {
+      const response = await this.httpClient.get(`/api/recipes/${_id}`);
+      return { status: response.status, data:response.data };
+    } catch (error) {
+      return {
+        error: error?.response?.data || null,
+        message: error?.response?.data?.message || "Unknown error",
+        status: error?.response?.status || 500,
+      };
+    }
   }
+  // getRecipeById(_id) {
+  //   return fetch(`/api/recipes/${_id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   }).then(async (res) => {
+  //     const contentType = res.headers.get("Content-Type");
+
+  //     if (!res.ok) {
+  //       // If response is not OK, try to get JSON or return plain status
+  //       let errorData;
+  //       if (contentType && contentType.includes("application/json")) {
+  //         errorData = await res.json();
+  //       }
+  //       return { status: res.status, error: errorData || "Something went wrong" };
+  //     }
+
+  //     // If it's OK and JSON, parse it
+  //     const data = await res.json();
+  //     return { status: res.status, data };
+  //   });
+  // }
 
 
   async getAllRecipes() {
