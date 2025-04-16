@@ -19,7 +19,7 @@ export class RecipeService extends BaseService {
 
   async getRecipeById(_id) {
     try {
-      const response = await this.httpClient.get(`/api/recipes/${_id}`);
+      const response = await this.httpClient.get(`/recipes/${_id}`);
       return { status: response.status, data:response.data };
     } catch (error) {
       return {
